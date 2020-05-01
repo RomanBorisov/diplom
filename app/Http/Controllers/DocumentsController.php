@@ -76,15 +76,21 @@ class DocumentsController extends Controller
         $user_id = auth()->user()->id; 
         $user = User::find($user_id);
 
+        //check for existence of document
         if(!$doc){
             return redirect('/documents')->with('error', 'Документ не существует');
         }
 
 
-        //Check fpr correct user
+        //Check for correct user
         if($user_id !== $doc->$user_id){
             return redirect('/documents')->with('error', 'Документ не существует');
         }
+
+        if(!$doc){
+            return redirect('/documents')->with('error', 'Документ не существует');
+        }
+
 
        
         return view('documents.show')->with('doc', $doc);
@@ -101,6 +107,11 @@ class DocumentsController extends Controller
         $doc = Document::find($id);
         $user_id = auth()->user()->id; 
         $user = User::find($user_id);
+
+        //check for existence of document
+        if(!$doc){
+            return redirect('/documents')->with('error', 'Документ не существует');
+        }
 
         //Check fpr correct user
         if($user_id !== $doc->$user_id){
@@ -141,6 +152,11 @@ class DocumentsController extends Controller
     public function destroy($id)
     {
         $doc = Document::find($id);
+        
+        //check for existence of document
+        if(!$doc){
+            return redirect('/documents')->with('error', 'Документ не существует');
+        }
 
         //Check fpr correct user
         if($user_id !== $doc->$user_id){
