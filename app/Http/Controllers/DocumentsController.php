@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Document;
+use App\User; 
 
 class DocumentsController extends Controller
 {
@@ -15,7 +16,9 @@ class DocumentsController extends Controller
     public function index()
     {
         $docs = Document::orderBy('id', 'asc')->paginate(10);
-        return view('documents.index')->with('docs', $docs);
+        $user_id = auth()->user()->id; 
+        $user = User::find($user_id);
+        return view('documents.index')->with('docs', $user->documents);
     }
 
     /**
@@ -44,6 +47,7 @@ class DocumentsController extends Controller
         $doc = new Document;
         $doc->title = $request->input('title');
         $doc->body = $request->input('body');
+        $doc->user_id = auth()->user()->id;
         $doc->save();
 
         return redirect('/documents')->with('success', 'Домумент создан!');
@@ -69,7 +73,10 @@ class DocumentsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $doc = Document::find($id);
+        return view('documents.edit')->with('doc', $doc);
+
+
     }
 
     /**
@@ -81,7 +88,17 @@ class DocumentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+
+        $doc = Document::find($id);
+        $doc->title = $request->input('title');
+        $doc->body = $request->input('body');
+        $doc->save();
+
+        return redirect('/documents')->with('success', 'Изменения сохранены!');
     }
 
     /**
@@ -92,6 +109,8 @@ class DocumentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $doc = Document::find($id);
+        $doc->delete();
+        return redirect('/documents')->with('success', 'Домумент удалён!'); 
     }
 }

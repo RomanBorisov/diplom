@@ -11,6 +11,14 @@
             </div>
             <hr>
             <small>{{$doc->created_at}}</small>
+            <hr>
+            <div class="row justify-content-between">
+                <a href="/documents/{{$doc->id}}/edit" class="btn btn-success">Редактировать</a>
+                {!!Form::open(['action' => ['DocumentsController@destroy', $doc->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
+                    {{Form::hidden('_method', 'DELETE')}}
+                    {{Form::submit('Удалить', ['class' => 'btn btn-danger'])}}
+                {!!Form::close()!!}
+            </div>
         </div>
     </div>
 </div>

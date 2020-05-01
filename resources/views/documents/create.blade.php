@@ -15,17 +15,8 @@
                         {{Form::label('body', 'Документ')}}
                         {{Form::textarea('body', '', ['class' => 'form-control', 'placeholder' => 'Введите текст', 'id' => 'editor'])}}
                 </div>
-                {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
+                {{Form::submit('Создать', ['class' => 'btn btn-primary'])}}
             {!! Form::close() !!}
-        
-            <form method="post" enctype="multipart/form-data">
-                @csrf              <!-- с версии Laravel 5.6 -->
-            
-                <!-- поле для загрузки файла -->
-                <input type="file" name="userfile">
-            
-                <input type="submit">
-            </form>
         </div>
     </div>
 </div>

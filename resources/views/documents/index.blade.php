@@ -17,9 +17,11 @@
                                     </a>
                                 @endforeach
                             </div>
-                            {{$docs->links()}}
                         @else 
                             <p>Документов нет!</p>
+                            <a class="btn btn-success" href="/documents/create">
+                                {{ __('Создать документ') }}
+                            </a>
                         @endif
                 </div>
             </div>
