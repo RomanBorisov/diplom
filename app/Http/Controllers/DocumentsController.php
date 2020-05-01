@@ -8,6 +8,17 @@ use App\User;
 
 class DocumentsController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -62,6 +73,20 @@ class DocumentsController extends Controller
     public function show($id)
     {
         $doc = Document::find($id);
+        $user_id = auth()->user()->id; 
+        $user = User::find($user_id);
+
+        if(!$doc){
+            return redirect('/documents')->with('error', 'Документ не существует');
+        }
+
+
+        //Check fpr correct user
+        if($user_id !== $doc->$user_id){
+            return redirect('/documents')->with('error', 'Документ не существует');
+        }
+
+       
         return view('documents.show')->with('doc', $doc);
     }
 
@@ -74,9 +99,15 @@ class DocumentsController extends Controller
     public function edit($id)
     {
         $doc = Document::find($id);
+        $user_id = auth()->user()->id; 
+        $user = User::find($user_id);
+
+        //Check fpr correct user
+        if($user_id !== $doc->$user_id){
+            return redirect('/documents')->with('error', 'Неавторизированный пользователь');
+        }
+
         return view('documents.edit')->with('doc', $doc);
-
-
     }
 
     /**
@@ -110,6 +141,12 @@ class DocumentsController extends Controller
     public function destroy($id)
     {
         $doc = Document::find($id);
+
+        //Check fpr correct user
+        if($user_id !== $doc->$user_id){
+            return redirect('/documents')->with('error', 'Неавторизированный пользователь');
+        }
+
         $doc->delete();
         return redirect('/documents')->with('success', 'Домумент удалён!'); 
     }
