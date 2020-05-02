@@ -10,8 +10,15 @@
                 {!!$doc->body!!}
             </div>
             <hr>
-            <small>{{$doc->created_at}}</small>
+            @if ($doc->cover_file==='nofile.jpg')
+                <p>Нет загруженных файлов</p>
+            @else
+                Загруженный файл: <a href="/storage/cover_files/{{$doc->cover_file}}" download>{{$doc->cover_file}}</a>
+            @endif
             <hr>
+            <small>Создан: {{$doc->created_at}}</small>
+            <hr>
+            
             <div class="row justify-content-between">
                 <a href="/documents/{{$doc->id}}/edit" class="btn btn-success">Редактировать</a>
                 {!!Form::open(['action' => ['DocumentsController@destroy', $doc->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
