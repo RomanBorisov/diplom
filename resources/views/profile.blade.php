@@ -13,7 +13,7 @@
                     <a href="#" class="btn btn-primary btn-block">
                         {{ __('Настройки профиля') }}
                     </a>
-                    <a href="#" class="btn btn-primary btn-block">
+                    <a href="/changepassword" class="btn btn-primary btn-block">
                         {{ __('Сменить пароль') }}
                     </a>
                 </div>
@@ -26,7 +26,7 @@
             <div class="card">
                 <div class="card-header">Настройки профиля</div>
                 <div class="card-body">
-                    {!! Form::open(['action' => ['ProfileController@update', Auth::user()->id ], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                    {!! Form::open(['action' => ['ProfileController@update'], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                         <div class="form-group">
                             <label for="name"><strong>Имя:</strong></label>
                             <input type="text" name="name" id="name" class="form-control" value="{{ Auth::user()->name }}">

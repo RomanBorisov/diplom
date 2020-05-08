@@ -30,7 +30,7 @@ return [
         'array'   => 'Количество элементов в поле :attribute должно быть между :min и :max.',
     ],
     'boolean'        => 'Поле :attribute должно иметь значение логического типа.',
-    'confirmed'      => 'Поле :attribute не совпадает с подтверждением.',
+    'confirmed'      => ':attribute не совпадает с подтверждением.',
     'date'           => 'Поле :attribute не является датой.',
     'date_equals'    => 'Поле :attribute должно быть датой равной :date.',
     'date_format'    => 'Поле :attribute не соответствует формату :format.',
@@ -190,6 +190,7 @@ return [
         'time'                  => 'Время',
         'available'             => 'Доступно',
         'size'                  => 'Размер',
-        'body'                  => 'Документ'
+        'body'                  => 'Документ',
+        'new-password'          => 'Новый пароль'
     ],
 ];

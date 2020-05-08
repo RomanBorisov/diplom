@@ -24,4 +24,8 @@ Auth::routes();
 Route::get('/profile', 'ProfileController@profile');
 Route::post('/profileupdate', 'ProfileController@update');
 
+Route::get('/changepassword', 'ProfileController@changePasswordView');
+Route::post('/changepassword', 'ProfileController@changePassword');
+
+
 Route::resource('documents', 'DocumentsController');
