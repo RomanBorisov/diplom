@@ -22,7 +22,7 @@
                         <a href="" download="{{$doc->cover_file}}">{{$doc->cover_file}}</a>
                     @endif
                 </div>
-                {{Form::hidden('_method','PUT  ')}}
+                {{Form::hidden('_method','PUT')}}
                 {{Form::submit('Сохранить', ['class' => 'btn btn-primary'])}}
             {!! Form::close() !!}
         </div>

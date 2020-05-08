@@ -1,8 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container">
     <div class="row justify-content-center">
-        <div class="w-100">
+        <!-- Start sidebar-->  
+        <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <a href="/documents/create" class="btn btn-primary btn-block">
+                                {{ __('Создать документ') }}
+                        </a>
+                        <a href="/profile" class="btn btn-primary btn-block">
+                            {{ __('Настройки профиля') }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- End sidebar--> 
+        <div class="col-md-9">
             <div class="card">
                 <div class="card-header">Список документов</div>
                 <div class="card-body">
@@ -27,5 +42,5 @@
             </div>
         </div>
     </div>
-   
+</div>  
 @endsection

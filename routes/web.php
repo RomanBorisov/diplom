@@ -19,6 +19,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/profile', 'ProfileController@profile');
+Route::post('/profileupdate', 'ProfileController@update');
 
 Route::resource('documents', 'DocumentsController');
