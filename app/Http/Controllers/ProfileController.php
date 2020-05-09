@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User; 
 use Auth;
 use Hash;
+use Nexmo;
 
 class ProfileController extends Controller
 {
@@ -34,14 +35,31 @@ class ProfileController extends Controller
         //Validation rules
         $this->validate($request, [
             'name' => 'required|string|min:5|max:255',
-            'email' => 'required|email|string|max:255'
+            'email' => 'required|email|string|max:255',
+            'phone_number' => 'required|min:11|max:12'
         ]);
         //Save the Profile updates
         $user = Auth::user();
+        if ($user->email !== $request['email'])    {
+            $user->email_verified_at = NULL;
+        }
+
+        if ($user->phone_number !== $request['phone_number'])    {
+            $user->phone_verified_at = NULL;
+            $this->create($request);
+        }
+        else {
+            return redirect('/profile');
+        }
+
+
         $user->name = $request['name'];
         $user->email = $request['email'];
+        $user->phone_number = $request['phone_number'];
         $user->save();
-        return redirect('/profile')->with('success', 'Изменения сохранены!');
+        
+        return redirect('/nexmo');
+        //return redirect('/nexmo')->with('success', 'Изменения сохранены!');
     }
     /**
      * Get the profile view for changing the password
@@ -70,5 +88,17 @@ class ProfileController extends Controller
         $user->password = bcrypt($request->get('new-password'));
         $user->save();
         return redirect('/changepassword')->with('success', 'Пароль успешно изменён');
+    }
+
+    public function create($data)
+    {
+
+        $verification = Nexmo::verify()->start([
+            'number' => $data['phone_number'],
+            'brand' => 'Рога и копыта',
+        ]);
+        
+        session(['nexmo_request_id' => $verification->getRequestId()]);
+
     }
 }

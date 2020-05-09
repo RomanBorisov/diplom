@@ -12,8 +12,8 @@
                     {{Form::text('title', '', ['class' => 'form-control', 'placeholder' => 'Название документа'])}}
                 </div>
                 <div class="form-group">
-                        {{Form::label('body', 'Документ')}}
-                        {{Form::textarea('body', '', ['class' => 'form-control', 'placeholder' => 'Введите текст', 'id' => 'editor'])}}
+                    {{Form::label('body', 'Документ')}}
+                    {{Form::textarea('body', '', ['class' => 'form-control', 'placeholder' => 'Введите текст', 'id' => 'editor'])}}
                 </div>
                 <div class="form-group">
                     {{Form::file('cover_file')}}

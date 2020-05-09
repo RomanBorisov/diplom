@@ -12,7 +12,6 @@ return [
     | другие, которые лучше подходят для вашего приложения.
     |
     */
-
     'accepted'        => 'Вы должны принять :attribute.',
     'active_url'      => 'Поле :attribute содержит недействительный URL.',
     'after'           => 'В поле :attribute должна быть дата после :date.',
@@ -141,6 +140,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'phone_number' => [
+            'size' => 'Номер телефона должен состоять из :size цифр!',
+        ]
     ],
 
     /*

@@ -38,7 +38,7 @@
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                        {{ __('Отправить ссылку на сброс пароля') }}
+                                        {{ __('Отправить код') }}
                                     </button>
                                 </div>
                             </div>
