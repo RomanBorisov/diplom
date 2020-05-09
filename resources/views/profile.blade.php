@@ -34,7 +34,15 @@
                         <div class="form-group">
                             <label for="email"><strong>email:</strong></label>
                             <input type="text" name="email" id="email" class="form-control" value="{{ Auth::user()->email }}">
+                            <small><span class="text-success font-weight-bold">Подтвержден: {{Auth::user()->email_verified_at}}</span></small>
                         </div>
+
+                        <div class="form-group">
+                            <label for="phone_number"><strong>Номер телефона:</strong></label>
+                            <input type="text" name="phone_number" id="phone_number" class="form-control" value="{{ Auth::user()->phone_number }}">
+                            <small><span class="text-success font-weight-bold">Подтвержден: {{Auth::user()->phone_verified_at}}</span></small>
+                        </div>
+
                         {{Form::submit('Сохранить', ['class' => 'btn btn-primary'])}}
                     {!! Form::close() !!}
                 </div>

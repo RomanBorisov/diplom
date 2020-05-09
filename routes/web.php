@@ -27,5 +27,8 @@ Route::post('/profileupdate', 'ProfileController@update');
 Route::get('/changepassword', 'ProfileController@changePasswordView');
 Route::post('/changepassword', 'ProfileController@changePassword');
 
+Route::get('/nexmo', 'NexmoController@show')->name('nexmo');
+Route::post('/nexmo', 'NexmoController@verify')->name('nexmo');
+
 
 Route::resource('documents', 'DocumentsController');
