@@ -38,28 +38,33 @@ class ProfileController extends Controller
             'email' => 'required|email|string|max:255',
             'phone_number' => 'required|min:11|max:12'
         ]);
-        //Save the Profile updates
         $user = Auth::user();
+
+        //Сlear phone/email verification date if they has been changed
         if ($user->email !== $request['email'])    {
             $user->email_verified_at = NULL;
+            $this->middleware('throttle:6,1')->only('verify', 'resend');
         }
+        
 
         if ($user->phone_number !== $request['phone_number'])    {
             $user->phone_verified_at = NULL;
-            $this->create($request);
-        }
-        else {
-            return redirect('/profile');
+            $this->sendCodeToPhoneNum($request);
+            $user->name = $request['name'];
+            $user->email = $request['email'];
+            $user->phone_number = $request['phone_number'];
+            $user->save();
+        
+            return redirect('/nexmo');
         }
 
-
+        //Save the Profile updates
         $user->name = $request['name'];
         $user->email = $request['email'];
         $user->phone_number = $request['phone_number'];
         $user->save();
         
-        return redirect('/nexmo');
-        //return redirect('/nexmo')->with('success', 'Изменения сохранены!');
+        return redirect('/profile');
     }
     /**
      * Get the profile view for changing the password
@@ -90,7 +95,11 @@ class ProfileController extends Controller
         return redirect('/changepassword')->with('success', 'Пароль успешно изменён');
     }
 
-    public function create($data)
+
+    /**
+     * Send code to specified phone number
+     */
+    public function sendCodeToPhoneNum($data)
     {
 
         $verification = Nexmo::verify()->start([

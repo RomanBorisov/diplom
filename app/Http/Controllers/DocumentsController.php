@@ -27,7 +27,7 @@ class DocumentsController extends Controller
      */
     public function index()
     {
-        $docs = Document::orderBy('id', 'asc')->paginate(10);
+        $docs = Document::orderBy('id', 'asc');
         $user_id = auth()->user()->id; 
         $user = User::find($user_id);
         return view('documents.index')->with('docs', $user->documents);

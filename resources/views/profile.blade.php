@@ -28,12 +28,12 @@
                 <div class="card-body">
                     {!! Form::open(['action' => ['ProfileController@update'], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                         <div class="form-group">
-                            <label for="name"><strong>Имя:</strong></label>
-                            <input type="text" name="name" id="name" class="form-control" value="{{ Auth::user()->name }}">
+                            <strong>{{Form::label('name', 'Имя')}}</strong>
+                            {{Form::text('name', Auth::user()->name, ['class' => 'form-control', 'id' => 'name'])}}
                         </div>
                         <div class="form-group">
-                            <label for="email"><strong>email:</strong></label>
-                            <input type="text" name="email" id="email" class="form-control" value="{{ Auth::user()->email }}">
+                            <strong>{{Form::label('email', 'email')}}</strong>
+                            {{Form::text('email', Auth::user()->email, ['class' => 'form-control', 'id' => 'email'])}}
                             @if (Auth::user()->email_verified_at)
                                 <small><span class="text-success font-weight-bold">Подтвержден</span></small>
                             @else
@@ -42,9 +42,9 @@
                         </div>
 
                         <div class="form-group">
-                            {{Form::label('phone_number', 'Номер телефона')}}
+                            <strong>{{Form::label('phone_number', 'Номер телефона')}}</strong>
                             {{Form::text('phone_number', Auth::user()->phone_number, ['class' => 'form-control', 'id' => 'phone_number'])}}
-                            @if (Auth::user()->email_verified_at)
+                            @if (Auth::user()->phone_verified_at)
                                 <small><span class="text-success font-weight-bold">Подтвержден</span></small>
                             @else
                                 <small><span class="text-error font-weight-bold">Не подтвержден</span></small>
