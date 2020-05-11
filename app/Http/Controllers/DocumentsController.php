@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Document;
 use App\User; 
+use App\SendCode;
 
 class DocumentsController extends Controller
 {
@@ -56,8 +57,9 @@ class DocumentsController extends Controller
             'body' => 'required',
             'cover_file' => 'nullable|max:2999'
         ]);
+        $user = User::find(auth()->user()->id);
 
-        //Handle file upload\
+        //Handle file upload
         if($request->hasFile('cover_file')){
             // Get filename with the extention 
             $fileNameWithExt = $request->file('cover_file')->getClientOriginalName();
@@ -79,9 +81,10 @@ class DocumentsController extends Controller
         $doc->body = $request->input('body');
         $doc->user_id = auth()->user()->id;
         $doc->cover_file = $fileNameToStore;
+        $doc->code = SendCode::sendCode($user->phone_number);
         $doc->save();
 
-        return redirect('/documents')->with('success', 'Домумент создан!');
+        return redirect('/verifydoc')->with('success', 'Домумент создан!');
     }
 
     /**
@@ -209,4 +212,5 @@ class DocumentsController extends Controller
         $doc->delete();
         return redirect('/documents')->with('success', 'Домумент удалён!'); 
     }
+
 }

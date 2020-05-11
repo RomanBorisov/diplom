@@ -18,7 +18,12 @@
             <hr>
             <small>Создан: {{$doc->created_at}}</small>
             <hr>
-            
+            @if ($doc->verified)
+                <p class="text-success">Документ подтвержден</p>
+            @else
+                <p class="text-danger">Документ не подтвержден</p>
+            @endif
+            <hr>            
             <div class="row justify-content-between">
                 <a href="/documents/{{$doc->id}}/edit" class="btn btn-success">Редактировать</a>
                 {!!Form::open(['action' => ['DocumentsController@destroy', $doc->id], 'method' => 'POST', 'class' => 'pull-right'])!!}

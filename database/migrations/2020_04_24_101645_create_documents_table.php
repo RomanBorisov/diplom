@@ -17,6 +17,8 @@ class CreateDocumentsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('body');
+            $table->string('code')->nullable();
+            $table->boolean('verified')->default(false);
             $table->timestamps();
         });
     }
