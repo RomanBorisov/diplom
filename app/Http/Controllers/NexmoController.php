@@ -7,6 +7,9 @@ use Nexmo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Document;
+use App\User;
+use App\SendCode;
+
 
 class NexmoController extends Controller
 {
@@ -50,4 +53,5 @@ class NexmoController extends Controller
             return back()->with('error', 'Введённый код неверен. Пожалуйста, попробуйте заново');
         }
     }
+
 }

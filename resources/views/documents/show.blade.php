@@ -19,10 +19,14 @@
             <small>Создан: {{$doc->created_at}}</small>
             <hr>
             @if ($doc->verified)
-                <p class="text-success">Документ подтвержден</p>
+                <p class="font-weight-bold text-success text-uppercase">Документ подтвержден</p>
             @else
-                <p class="text-danger">Документ не подтвержден</p>
-            @endif
+               <p class="font-weight-bold text-danger text-uppercase">Документ не подтвержден</p>
+               {!! Form::open(['action' => ['DocumentsController@verificate', $doc->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                    {{Form::hidden('_method','PUT')}}
+                    {{Form::submit('Подтвердить', ['class' => 'btn btn-primary'])}}
+                {!! Form::close() !!}
+            @endif 
             <hr>            
             <div class="row justify-content-between">
                 <a href="/documents/{{$doc->id}}/edit" class="btn btn-success">Редактировать</a>

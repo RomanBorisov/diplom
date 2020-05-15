@@ -170,15 +170,17 @@ class DocumentsController extends Controller
 
 
         $doc = Document::find($id);
+        $user = User::find(auth()->user()->id);
+
         $doc->title = $request->input('title');
         $doc->body = $request->input('body');
         if($request->hasFile('cover_file')){
-            $doc->cover_file = $fileNameToStore;
-           
+            $doc->cover_file = $fileNameToStore;   
         }
-
+        $doc->code = SendCode::sendCode($user->phone_number);
         $doc->save();
-        return redirect('/documents')->with('success', 'Изменения сохранены!');
+
+        return redirect('/verifydoc');
     }
 
     /**
@@ -211,6 +213,24 @@ class DocumentsController extends Controller
 
         $doc->delete();
         return redirect('/documents')->with('success', 'Домумент удалён!'); 
+    }
+
+       /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function verificate($id)
+    {
+        $doc = Document::find($id);
+        $user = User::find(auth()->user()->id);      
+
+        $doc->code = SendCode::sendCode($user->phone_number);
+        $doc->save();
+
+        return redirect('verifydoc');
     }
 
 }
