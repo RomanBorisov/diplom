@@ -66,10 +66,14 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="/documents">
-                                    {{ __('Список документов') }}
+                                    {{ __('Список всех документов') }}
                                 </a>
                                 <a class="dropdown-item" href="/documents/create">
                                     {{ __('Создать документ') }}
+                                </a>
+                                <hr>
+                                <a class="dropdown-item" href="/dashboard">
+                                    {{ __('Список моих документов') }}
                                 </a>
                                 <hr>
                                 <a class="dropdown-item" href="/profile">

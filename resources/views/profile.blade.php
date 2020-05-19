@@ -7,9 +7,13 @@
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
-                    <a href="/documents" class="btn btn-primary btn-block">
-                        {{ __('Список документов') }}
+                    <a href="/dashboard" class="btn btn-primary btn-block">
+                        {{ __('Мои документы') }}
                     </a>
+                    <a href="/documents" class="btn btn-primary btn-block">
+                        {{ __('Все документы') }}
+                    </a>
+                    <hr>
                     <a href="#" class="btn btn-primary btn-block">
                         {{ __('Настройки профиля') }}
                     </a>

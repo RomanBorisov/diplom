@@ -31,6 +31,8 @@ Route::post('/nexmo', 'NexmoController@verify')->name('nexmo');
 Route::get('/verifydoc', 'NexmoController@getDocVerify')->name('getverifydoc');
 Route::post('/verifydoc', 'NexmoController@postDocVerify')->name('verify');
 
+Route::get('/dashboard', 'DashboardController@index');
+
 Route::resource('documents', 'DocumentsController');
 Route::put('documents/{id}/verifydoc', 'DocumentsController@verificate');
 

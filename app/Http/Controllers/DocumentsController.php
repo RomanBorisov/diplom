@@ -28,10 +28,8 @@ class DocumentsController extends Controller
      */
     public function index()
     {
-        $docs = Document::orderBy('id', 'asc');
-        $user_id = auth()->user()->id; 
-        $user = User::find($user_id);
-        return view('documents.index')->with('docs', $user->documents);
+        $docs = Document::orderBy('created_at','desc')->paginate(5);
+        return view('documents.index')->with('docs', $docs);
     }
 
     /**
@@ -72,7 +70,7 @@ class DocumentsController extends Controller
             // Upload Image
             $path = $request->file('cover_file')->storeAs('public/cover_files', $fileNameToStore);
         } else {
-            $fileNameToStore = 'nofile.jpg';
+            $fileNameToStore = '';
         }
 
         //Create doc
@@ -103,14 +101,6 @@ class DocumentsController extends Controller
         if(!$doc){
             return redirect('/documents')->with('error', 'Документ не существует');
         }
-
-
-        //Check for correct user
-        if($user_id !== $doc->user_id){
-            return redirect('/documents')->with('error', 'Документ не существует');
-        }
-
-
        
         return view('documents.show')->with('doc', $doc);
     }
@@ -205,7 +195,7 @@ class DocumentsController extends Controller
             return redirect('/documents')->with('error', 'Неавторизированный пользователь');
         }
 
-        if ($doc->cover_file !== 'nofile.jpg') {
+        if ($doc->cover_file !== '') {
             // Delete File
             Storage::delete('public/cover_files/'.$doc->cover_file);
 

@@ -16,7 +16,7 @@
                         {{Form::textarea('body', $doc->body, ['class' => 'form-control', 'placeholder' => 'Введите текст', 'id' => 'editor'])}}
                 </div>
                 <div class="form-group">
-                    @if ($doc->cover_file==='nofile.jpg')
+                    @if ($doc->cover_file === '')
                         {{Form::file('cover_file')}}
                     @else
                         <a href="" download="{{$doc->cover_file}}">{{$doc->cover_file}}</a>
