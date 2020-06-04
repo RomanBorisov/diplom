@@ -10,6 +10,7 @@ use App\SendCode;
 
 class DocumentsController extends Controller
 {
+    
 
     /**
      * Create a new controller instance.
@@ -28,7 +29,9 @@ class DocumentsController extends Controller
      */
     public function index()
     {
-        $docs = Document::orderBy('created_at','desc')->paginate(5);
+        $user_id = auth()->user()->id;
+        $user = User::find($user_id);
+        $docs = $user->documents;
         return view('documents.index')->with('docs', $docs);
     }
 
@@ -38,8 +41,9 @@ class DocumentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('documents.create');
+    {   
+        $users = User::all();
+        return view('documents.create')->with('users', $users);
     }
 
     /**
@@ -77,12 +81,18 @@ class DocumentsController extends Controller
         $doc = new Document;
         $doc->title = $request->input('title');
         $doc->body = $request->input('body');
-        $doc->user_id = auth()->user()->id;
         $doc->cover_file = $fileNameToStore;
-        $doc->code = SendCode::sendCode($user->phone_number);
+
+        if (auth()->user()->id !== 1) {
+            $doc->user_id = auth()->user()->id;
+            $doc->code = SendCode::sendCode($user->phone_number);
+        } else {
+            $doc->user_id = $request->input('user_id');
+        }
+        
         $doc->save();
 
-        return redirect('/verifydoc')->with('success', 'Домумент создан!');
+        return redirect('/documents')->with('success', 'Домумент создан!');
     }
 
     /**
@@ -98,8 +108,10 @@ class DocumentsController extends Controller
         $user = User::find($user_id);
 
         //check for existence of document
-        if(!$doc){
+        if(!$doc ||  $user_id !== $doc->user_id ){
+            if ($user_id !== 1) {
             return redirect('/documents')->with('error', 'Документ не существует');
+           }
         }
        
         return view('documents.show')->with('doc', $doc);
@@ -118,13 +130,10 @@ class DocumentsController extends Controller
         $user = User::find($user_id);
 
         //check for existence of document
-        if(!$doc){
-            return redirect('/documents')->with('error', 'Документ не существует');
-        }
-
-        //Check fpr correct user
-        if($user_id !== $doc->user_id){
-            return redirect('/documents')->with('error', 'Неавторизированный пользователь');
+        if(!$doc || $user_id !== 1){
+            if($user_id !== $doc->user_id){
+                return redirect('/documents')->with('error', 'Документ не существует');
+            }
         }
 
         return view('documents.edit')->with('doc', $doc);
@@ -164,13 +173,20 @@ class DocumentsController extends Controller
 
         $doc->title = $request->input('title');
         $doc->body = $request->input('body');
+
         if($request->hasFile('cover_file')){
             $doc->cover_file = $fileNameToStore;   
         }
-        $doc->code = SendCode::sendCode($user->phone_number);
+
+        if (auth()->user()->id !== 1) {
+            $doc->code = SendCode::sendCode($user->phone_number);
+            $doc->save();
+            return redirect('/verifydoc');
+        }
+
         $doc->save();
 
-        return redirect('/verifydoc');
+        return redirect('/dashboard');
     }
 
     /**

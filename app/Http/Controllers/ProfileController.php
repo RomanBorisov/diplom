@@ -92,7 +92,7 @@ class ProfileController extends Controller
         $user = Auth::user();
         $user->password = bcrypt($request->get('new-password'));
         $user->save();
-        return redirect('/changepassword')->with('success', 'Пароль успешно изменён');
+        return redirect('/profile')->with('success', 'Пароль успешно изменён');
     }
 
 
@@ -104,7 +104,7 @@ class ProfileController extends Controller
 
         $verification = Nexmo::verify()->start([
             'number' => $data['phone_number'],
-            'brand' => 'Рога и копыта',
+            'brand' => 'Кредитная орг.',
         ]);
         
         session(['nexmo_request_id' => $verification->getRequestId()]);

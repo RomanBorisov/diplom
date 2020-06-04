@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Рога и копыта</title>
+        <title>Кредитная организация</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -12,8 +12,7 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
+                color: white;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 height: 100vh;
@@ -49,7 +48,7 @@
             }
 
             .links > a {
-                color: #636b6f;
+                color: white;
                 padding: 0 25px;
                 font-size: 13px;
                 font-weight: 600;
@@ -61,12 +60,15 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .links {
+                color: white;
+            }
         </style>
     </head>
-    <body>
+    <body class="view" style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/91.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
-                <div class="top-right links">
+                <div class="top-right links text-white">
                     @auth
                         <a href="{{ url('/documents') }}">Личный кабинет</a>
                     @else
@@ -81,7 +83,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Рога и копыта
+                    Кредитная организация
                 </div>
             </div>
         </div>

@@ -24,8 +24,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $user_id = auth()->user()->id;
-        $user = User::find($user_id);
-        return view('dashboard')->with('docs', $user->documents);
+        $users = User::all();
+        return view('dashboard')->with('users', $users);
     }
 }

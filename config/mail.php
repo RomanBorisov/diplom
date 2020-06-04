@@ -44,7 +44,7 @@ return [
 
     'from' => [
         'address' => 'roma.borisov51198@yandex.ru', 
-        'name' => 'Рога и копыта'
+        'name' => 'Кредитная организация'
     ],
 
 
@@ -61,7 +61,7 @@ return [
     'port' => env('MAIL_PORT', 587),
     'from' => [
         'address' => 'roma.borisov51198@yandex.ru',
-        'name' => 'Рога и копыта',
+        'name' => 'Кредитная организация',
     ],
     'encryption' => env('MAIL_ENCRYPTION', 'tls'),
     'username' => env('MAIL_USERNAME', 'roma.borisov51198@yandex.ru'),

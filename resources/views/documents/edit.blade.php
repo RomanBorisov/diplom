@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.app', ['title' => 'Изменить документ'])
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="w-100">
-            <a href="/documents" class="btn btn-default border border-dark mb-5">Назад</a>
+            <a href="{{ URL::previous() }}" class="btn btn-default border border-dark mb-5">Назад</a>
             <h1>Редактировать документ</h1>
             {!! Form::open(['action' => ['DocumentsController@update', $doc->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                 <div class="form-group">

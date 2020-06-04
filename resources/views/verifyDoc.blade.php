@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['title' => 'Подтверждение документа'])
 
 @section('content')
 <div class="container">

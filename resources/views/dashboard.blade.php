@@ -2,49 +2,57 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <!-- Start sidebar-->  
-        <div class="col-md-3">
+        <div class="row justify-content-center">
+        <!-- Start sidebar--> 
+            @include('inc.sidebar', ['user_id' => auth()->user()->id])
+        <!-- End sidebar--> 
+            <div class="col-md-9">
                 <div class="card">
+                    <div class="card-header">Список всех пользователей</div>
                     <div class="card-body">
-                        <a href="/documents" class="btn btn-primary btn-block">
-                                {{ __('Все документы') }}
-                        </a>
-                        <a href="/documents/create" class="btn btn-primary btn-block">
-                                {{ __('Создать документ') }}
-                        </a>
-                        <hr>
-                        <a href="/profile" class="btn btn-primary btn-block">
-                            {{ __('Настройки профиля') }}
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- End sidebar--> 
-        <div class="col-md-9">
-            <div class="card">
-                <div class="card-header">Список ваших документов</div>
-                <div class="card-body">
-                        @if (count($docs) > 0)
-                            <div class="list-group">
-                                @foreach ($docs as $doc)
-                                    <a href="/documents/{{$doc->id}}" class="list-group-item list-group-item-action flex-column  ml-auto mr-auto mb-2">
-                                        <div class="d-flex justify-content-between p-2">
-                                            <h5 class="mb-1">{{$doc->title}}</h5>
-                                            <small>{{$doc->created_at}}</small>
+                        @if (auth()->user()->id === 1) 
+                            @if (count($users) > 0) 
+                                @foreach ($users as $user)
+                                    @if ($user->id === 1) 
+                                        @continue 
+                                    @endif
+                                    <div class="dropdown show pb-3">
+                                        <button type="button" class="btn btn-secondary dropdown-toggle w-100" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {{ $user->name }}
+                                        </button>
+                                        <div class="dropdown-menu w-100 justify-content-center" aria-labelledby="dropdownMenuLink">
+                                            @if (count($user->documents) > 0 )
+                                                @foreach ($user->documents as $doc)
+                                                @if ($doc->verified)
+                                                    <a class="dropdown-item border border-success text-success" href="documents/{{$doc->id}}">
+                                                @else
+                                                    <a class="dropdown-item border border-danger text-danger" href="documents/{{$doc->id}}">
+                                                @endif
+                                                        {{$doc->id}} | {{$doc->title}}
+                                                        @if ($doc->verified)
+                                                            <div>Подтвержден</div>
+                                                        @else
+                                                            <div>Не подтвержден</div>
+                                                        @endif
+                                                    </a>
+                                                @endforeach
+                                            @else
+                                                <span class="ml-auto">Список пуст</span>
+                                            @endif
                                         </div>
-                                    </a>
-                                @endforeach
-                            </div>
-                        @else 
-                            <p>Документов нет!</p>
-                            <a class="btn btn-success" href="/documents/create">
-                                {{ __('Создать документ') }}
-                            </a>
+                                    </div>
+                                @endforeach 
+                            @else
+                                <p>Пользователей нет!</p>
+                            @endif 
+                            @else 
+                            Вы не являетесь менеджером. 
                         @endif
-                </div>
+              </div>
             </div>
+      
+          </div>
         </div>
-    </div>
-</div>  
+      </div>
+
 @endsection

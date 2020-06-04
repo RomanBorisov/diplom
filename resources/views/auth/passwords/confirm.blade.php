@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['title' => 'Подтверждение пароля'])
 
 @section('content')
 <div class="container">

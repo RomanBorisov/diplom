@@ -69,7 +69,7 @@ class RegisterController extends Controller
 
         $verification = Nexmo::verify()->start([
             'number' => $data['phone_number'],
-            'brand' => 'Рога и копыта',
+            'brand' => 'Кредитная орг.',
         ]);
         
         echo "Verification id: " . $verification->getRequestId();
